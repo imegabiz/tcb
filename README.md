@@ -11,7 +11,7 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 - ساخت و دانلود مستقیم فایل Worker با Token جاسازی‌شده
 - تولید UUID اتوماتیک یا استفاده از UUID دلخواه
 - پشتیبانی از پورت‌های TLS و WebSocket
-- پشتیبانی از چند IP یا Domain همزمان
+- پشتیبانی از چند IP و دامنه همزمان
 - انتخاب TLS Fingerprint برای دور زدن DPI
 - خروجی JSON با قابلیت least ping برای Xray
 - تنظیمات Fragment برای مقابله با فیلترینگ عمیق
@@ -23,7 +23,6 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 
 1. به [dash.cloudflare.com](https://dash.cloudflare.com) بروید و وارد حساب کاربری خود شوید.
 2. از منو Workers and Pages را انتخاب کنید، روی Create Application کلیک کنید، گزینه Create Worker را بزنید، یک نام دلخواه وارد کنید و Deploy کنید.
-3. در صفحه Worker به Settings بروید، بخش Compatibility را باز کنید و در قسمت Compatibility flags عبارت `nodejs_compat` را اضافه کنید و Save کنید. بدون این مرحله Worker کار نخواهد کرد.
 
 ### مرحله ۲ — تنظیم Token و آپلود کد
 
@@ -35,7 +34,7 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 ### مرحله ۳ — ساخت کانفیگ
 
 1. آدرس Worker را در فیلد مربوطه وارد کنید.
-2. IP های سالم Cloudflare را در کادر مربوطه وارد کنید. برای یافتن IP های سالم می‌توانید از ابزار [CF Clean IP Scanner](https://github.com/4n0nymou3/CF-Clean-IP-Scanner) استفاده کنید.
+2. IP های سالم Cloudflare را در کادر مربوطه وارد کنید. علاوه بر IP، می‌توانید از برخی دامنه‌ها نیز استفاده کنید (مثلاً chatgpt.com). برای یافتن IP های سالم می‌توانید از ابزار [CF Clean IP Scanner](https://github.com/4n0nymou3/CF-Clean-IP-Scanner) استفاده کنید.
 3. پورت‌ها، Fingerprint و Path مورد نظر را انتخاب کنید.
 4. در صورت تمایل، تنظیمات Fragment را فعال کرده و مقادیر دلخواه را وارد کنید.
 5. روی ساخت کانفیگ کلیک کنید.
