@@ -230,7 +230,7 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
       levels: { '8': { connIdle: 300, downlinkOnly: 1, handshake: 4, uplinkOnly: 1 } },
       system: { statsOutboundUplink: true, statsOutboundDownlink: true }
     },
-    remarks: 'My configs 🚀',
+    remarks: (document.getElementById('jsonName').value.trim()) || (fragEnable ? 'Least Ping Fragment 🚀' : 'Least Ping Normal 🚀'),
     routing: {
       balancers: [{ selector: ['proxy-'], strategy: { type: 'leastPing' }, tag: 'proxy-round' }],
       domainStrategy: 'AsIs',
