@@ -1,3 +1,5 @@
+<div align="right" dir="rtl">
+
 # Tunnel Config Builder
 
 ابزار ساخت کانفیگ VLESS برای Cloudflare Workers — بدون نیاز به VPS یا سرور شخصی
@@ -21,23 +23,31 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 
 ### مرحله ۱ — ساخت Worker در Cloudflare
 
-1. به [dash.cloudflare.com](https://dash.cloudflare.com) بروید و وارد حساب کاربری خود شوید.
-2. از منو Workers and Pages را انتخاب کنید، روی Create Application کلیک کنید، گزینه Create Worker را بزنید، یک نام دلخواه وارد کنید و Deploy کنید.
+۱. به [dash.cloudflare.com](https://dash.cloudflare.com) بروید و وارد حساب کاربری خود شوید.
+
+۲. از منو Workers and Pages را انتخاب کنید، روی Create Application کلیک کنید، گزینه Create Worker را بزنید، یک نام دلخواه وارد کنید و Deploy کنید.
 
 ### مرحله ۲ — تنظیم Token و آپلود کد
 
-1. در ابزار، یک Token جدید بسازید یا UUID دلخواه خود را مستقیم در کادر وارد کنید.
-2. کد Worker که به‌صورت خودکار با Token شما آپدیت شده را با دکمه کپی کد کپی کنید، یا با دکمه دانلود .js فایل `worker.js` را دانلود کنید.
-3. در داشبورد Cloudflare روی Edit Code کلیک کنید، کد پیش‌فرض را پاک کنید، کد کپی‌شده را Paste کنید و Deploy کنید.
-4. آدرسی که Cloudflare بعد از Deploy نمایش می‌دهد (مثل `myworker.username.workers.dev`) را کپی کنید.
+۱. در ابزار، یک Token جدید بسازید یا UUID دلخواه خود را مستقیم در کادر وارد کنید.
+
+۲. کد Worker که به‌صورت خودکار با Token شما آپدیت شده را با دکمه کپی کد کپی کنید، یا با دکمه دانلود `.js` فایل `worker.js` را دانلود کنید.
+
+۳. در داشبورد Cloudflare روی Edit Code کلیک کنید، کد پیش‌فرض را پاک کنید، کد کپی‌شده را Paste کنید و Deploy کنید.
+
+۴. آدرسی که Cloudflare بعد از Deploy نمایش می‌دهد (مثل `myworker.username.workers.dev`) را کپی کنید.
 
 ### مرحله ۳ — ساخت کانفیگ
 
-1. آدرس Worker را در فیلد مربوطه وارد کنید.
-2. IP های سالم Cloudflare را در کادر مربوطه وارد کنید. علاوه بر IP، می‌توانید از برخی دامنه‌ها نیز استفاده کنید (مثلاً chatgpt.com). برای یافتن IP های سالم می‌توانید از ابزار [CF Clean IP Scanner](https://github.com/4n0nymou3/CF-Clean-IP-Scanner) استفاده کنید.
-3. پورت‌ها، Fingerprint و Path مورد نظر را انتخاب کنید.
-4. در صورت تمایل، تنظیمات Fragment را فعال کرده و مقادیر دلخواه را وارد کنید.
-5. روی ساخت کانفیگ کلیک کنید.
+۱. آدرس Worker را در فیلد مربوطه وارد کنید.
+
+۲. IP های سالم Cloudflare را در کادر مربوطه وارد کنید. علاوه بر IP، می‌توانید از برخی دامنه‌ها نیز استفاده کنید (مثلاً chatgpt.com). برای یافتن IP های سالم می‌توانید از ابزار [CF Clean IP Scanner](https://github.com/4n0nymou3/CF-Clean-IP-Scanner) استفاده کنید.
+
+۳. پورت‌ها، Fingerprint و Path مورد نظر را انتخاب کنید.
+
+۴. در صورت تمایل، تنظیمات Fragment را فعال کرده و مقادیر دلخواه را وارد کنید.
+
+۵. روی ساخت کانفیگ کلیک کنید.
 
 ### مرحله ۴ — استفاده از کانفیگ‌ها
 
@@ -62,37 +72,61 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 
 اگر Git روی سیستم شما نصب نیست، ابتدا آن را نصب کنید:
 
-- **لینوکس (Ubuntu/Debian):**
+**لینوکس (Ubuntu/Debian):**
+
+</div>
+
 ```sh
 sudo apt install git
 ```
 
-- **مک (macOS):**
+<div align="right" dir="rtl">
+
+**مک (macOS):**
+
+</div>
+
 ```sh
 brew install git
 ```
 
-- **ویندوز:** از [git-scm.com](https://git-scm.com) نصب‌کننده را دانلود و اجرا کنید.
+<div align="right" dir="rtl">
 
-- **Termux روی اندروید:**
+**ویندوز:** از [git-scm.com](https://git-scm.com) نصب‌کننده را دانلود و اجرا کنید.
+
+**Termux روی اندروید:**
+
+</div>
+
 ```sh
 pkg install git
 ```
 
-- **iSH روی iOS:**
+<div align="right" dir="rtl">
+
+**iSH روی iOS:**
+
+</div>
+
 ```sh
 apk add git
 ```
 
 ---
 
+<div align="right" dir="rtl">
+
 ### مرحله ۲ — Clone کردن پروژه
 
 با دستور زیر، تمام فایل‌های پروژه از GitHub روی دستگاه شما دانلود می‌شود:
 
+</div>
+
 ```sh
 git clone https://github.com/4n0nymou3/cf-vless-config-builder.git
 ```
+
+<div align="right" dir="rtl">
 
 > **توضیح:** دستور `git clone` یعنی «یک کپی کامل از این پروژه برایم بساز». بعد از اجرا، یک پوشه با نام `cf-vless-config-builder` در مسیر جاری شما ایجاد می‌شود.
 
@@ -100,9 +134,13 @@ git clone https://github.com/4n0nymou3/cf-vless-config-builder.git
 
 ### مرحله ۳ — رفتن به داخل پوشه پروژه
 
+</div>
+
 ```sh
 cd cf-vless-config-builder
 ```
+
+<div align="right" dir="rtl">
 
 > **توضیح:** دستور `cd` یعنی «وارد این پوشه شو». باید حتماً این مرحله را انجام دهید، وگرنه مراحل بعدی کار نمی‌کنند.
 
@@ -112,29 +150,49 @@ cd cf-vless-config-builder
 
 Python معمولاً روی لینوکس و مک از قبل نصب است. اگر نصب نبود:
 
-- **لینوکس (Ubuntu/Debian):**
+**لینوکس (Ubuntu/Debian):**
+
+</div>
+
 ```sh
 sudo apt install python3
 ```
 
-- **مک (macOS):**
+<div align="right" dir="rtl">
+
+**مک (macOS):**
+
+</div>
+
 ```sh
 brew install python3
 ```
 
-- **ویندوز:** از [python.org](https://python.org) نصب‌کننده را دانلود کنید. در حین نصب گزینه **Add Python to PATH** را حتماً تیک بزنید.
+<div align="right" dir="rtl">
 
-- **Termux روی اندروید:**
+**ویندوز:** از [python.org](https://python.org) نصب‌کننده را دانلود کنید. در حین نصب گزینه **Add Python to PATH** را حتماً تیک بزنید.
+
+**Termux روی اندروید:**
+
+</div>
+
 ```sh
 pkg install python
 ```
 
-- **iSH روی iOS:**
+<div align="right" dir="rtl">
+
+**iSH روی iOS:**
+
+</div>
+
 ```sh
 apk add python3
 ```
 
 ---
+
+<div align="right" dir="rtl">
 
 ### مرحله ۵ — راه‌اندازی سرور محلی
 
@@ -142,24 +200,41 @@ apk add python3
 
 بسته به نسخه Python نصب‌شده روی سیستم، یکی از دستورات زیر را اجرا کنید:
 
-- **Python 3 (لینوکس، مک، ویندوز، Termux):**
+**Python 3 (لینوکس، مک، ویندوز، Termux):**
+
+</div>
+
 ```sh
 python -m http.server 8080
 ```
 
-- **Python 3 روی iSH:**
+<div align="right" dir="rtl">
+
+**Python 3 روی iSH:**
+
+</div>
+
 ```sh
 python3 -m http.server 8080
 ```
 
-- **Python 2 (نسخه قدیمی):**
+<div align="right" dir="rtl">
+
+**Python 2 (نسخه قدیمی):**
+
+</div>
+
 ```sh
 python -m SimpleHTTPServer 8080
 ```
 
+<div align="right" dir="rtl">
+
 > **توضیح:** عدد `8080` شماره پورت است — یعنی «سرور روی درگاه شماره ۸۰۸۰ گوش بده». اگر این پورت اشغال بود می‌توانید عدد دیگری مثل `8000` یا `9090` را جایگزین کنید.
 
 وقتی سرور با موفقیت اجرا شود، چیزی شبیه به این می‌بینید:
+
+</div>
 
 ```
 Serving HTTP on 0.0.0.0 port 8080 ...
@@ -167,13 +242,19 @@ Serving HTTP on 0.0.0.0 port 8080 ...
 
 ---
 
+<div align="right" dir="rtl">
+
 ### مرحله ۶ — باز کردن ابزار در مرورگر
 
 مرورگر خود را باز کنید و آدرس زیر را وارد کنید:
 
+</div>
+
 ```
 http://localhost:8080
 ```
+
+<div align="right" dir="rtl">
 
 > **توضیح:** `localhost` یعنی «همین دستگاه خودم». با این آدرس به سرور محلی که در مرحله قبل راه‌اندازی کردید متصل می‌شوید و ابزار مثل یک سایت معمولی در مرورگر باز می‌شود.
 
@@ -183,9 +264,13 @@ http://localhost:8080
 
 وقتی کارتان تمام شد، برای خاموش کردن سرور کافیست در همان پنجره ترمینال کلیدهای زیر را بزنید:
 
+</div>
+
 ```
 Ctrl + C
 ```
+
+<div align="right" dir="rtl">
 
 #### اگر ترمینال را اشتباهاً بستید
 
@@ -194,22 +279,36 @@ Ctrl + C
 برای حل این مشکل، دو دستور زیر را به ترتیب اجرا کنید:
 
 **اول — پیدا کردن برنامه‌ای که پورت ۸۰۸۰ را اشغال کرده:**
+
+</div>
+
 ```sh
 lsof -i :8080
 ```
 
+<div align="right" dir="rtl">
+
 این دستور یک جدول نمایش می‌دهد. در ستون `PID` یک عدد می‌بینید — آن عدد شناسه (ID) برنامه‌ای است که باید بسته شود.
 
 **دوم — بستن آن برنامه با شناسه‌اش:**
+
+</div>
+
 ```sh
 kill -9 PID
 ```
 
+<div align="right" dir="rtl">
+
 به جای `PID` عدد واقعی را از خروجی دستور قبل وارد کنید. مثلاً اگر عدد `2341` بود:
+
+</div>
 
 ```sh
 kill -9 2341
 ```
+
+<div align="right" dir="rtl">
 
 > **توضیح:** دستور `kill -9` یعنی «این برنامه را فوری و اجباری ببند». عدد `-9` یک سیگنال اجباری است که برنامه نمی‌تواند آن را نادیده بگیرد.
 
@@ -240,3 +339,5 @@ kill -9 2341
 
 - ⭐ یک Star به repository بدهید
 - آن را با دوستانتان به اشتراک بگذارید
+
+</div>
