@@ -153,11 +153,17 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
           const streamSettings = {
             network: 'ws',
             security: 'tls',
-            tlsSettings: { allowInsecure: false, fingerprint: fp, serverName: dom, show: false },
+            tlsSettings: {
+              allowInsecure: false,
+              fingerprint: fp,
+              serverName: dom,
+              show: false,
+              alpn: ['http/1.1']
+            },
             wsSettings: { headers: { Host: dom }, path: path }
           };
           if (fragEnable) {
-            streamSettings.settings = { fragment: { packets: fragPackets, length: fragLength, interval: fragInterval } };
+            streamSettings.sockopt = { dialerProxy: 'fragment' };
           }
           outbounds.push({
             mux: { concurrency: -1, enabled: false },
@@ -178,7 +184,7 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
           wsSettings: { headers: { Host: dom }, path: path }
         };
         if (fragEnable) {
-          streamSettings.settings = { fragment: { packets: fragPackets, length: fragLength, interval: fragInterval } };
+          streamSettings.sockopt = { dialerProxy: 'fragment' };
         }
         outbounds.push({
           mux: { concurrency: -1, enabled: false },
@@ -191,6 +197,28 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
       });
     });
   });
+
+  if (fragEnable) {
+    outbounds.push({
+      protocol: 'freedom',
+      settings: {
+        fragment: { packets: fragPackets, length: fragLength, interval: fragInterval }
+      },
+      streamSettings: {
+        sockopt: {
+          domainStrategy: 'UseIP',
+          tcpFastOpen: true,
+          happyEyeballs: {
+            tryDelayMs: 250,
+            prioritizeIPv6: false,
+            interleave: 2,
+            maxConcurrentTry: 4
+          }
+        }
+      },
+      tag: 'fragment'
+    });
+  }
 
   outbounds.push({ protocol: 'freedom', settings: { domainStrategy: 'UseIP' }, tag: 'direct' });
   outbounds.push({ protocol: 'blackhole', settings: { response: { type: 'http' } }, tag: 'block' });
@@ -220,7 +248,7 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
     inbounds: [{
       listen: '127.0.0.1', port: 10808, protocol: 'socks',
       settings: { auth: 'noauth', udp: true, userLevel: 8 },
-      sniffing: { destOverride: ['http','tls','fakedns'], enabled: true, routeOnly: false },
+      sniffing: { destOverride: ['http','tls','fakedns'], enabled: true, routeOnly: true },
       tag: 'socks'
     }],
     log: { loglevel: 'none' },
@@ -233,7 +261,7 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
     remarks: (document.getElementById('jsonName').value.trim()) || (fragEnable ? 'Least Ping Fragment 🚀' : 'Least Ping Normal 🚀'),
     routing: {
       balancers: [{ selector: ['proxy-'], strategy: { type: 'leastPing' }, tag: 'proxy-round' }],
-      domainStrategy: 'AsIs',
+      domainStrategy: 'IPIfNonMatch',
       rules: [
         { inboundTag: ['socks'], outboundTag: 'dns-out', port: '53', type: 'field' },
         { network: 'udp', outboundTag: 'block', port: '443', type: 'field' },
