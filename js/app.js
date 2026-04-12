@@ -222,7 +222,7 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
 
   outbounds.push({ protocol: 'freedom', settings: { domainStrategy: 'UseIP' }, tag: 'direct' });
   outbounds.push({ protocol: 'blackhole', settings: { response: { type: 'http' } }, tag: 'block' });
-  outbounds.push({ protocol: 'dns', tag: 'dns-out' });
+  outbounds.push({ protocol: 'dns', settings: { nonIPQuery: 'reject' }, tag: 'dns-out' });
 
   const config = {
     dns: {
@@ -242,6 +242,7 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
         'https://' + dom + '/dns-query',
         { address: '8.8.8.8', domains: ['domain:ir','geosite:category-ir'], skipFallback: true, tag: 'domestic-dns' }
       ],
+      queryStrategy: 'UseIP',
       tag: 'dns-module'
     },
     fakedns: [{ ipPool: '198.18.0.0/15', poolSize: 10000 }],
@@ -264,9 +265,11 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
       domainStrategy: 'IPIfNonMatch',
       rules: [
         { inboundTag: ['socks'], outboundTag: 'dns-out', port: '53', type: 'field' },
-        { network: 'udp', outboundTag: 'block', port: '443', type: 'field' },
         { ip: ['geoip:private'], outboundTag: 'direct', type: 'field' },
         { domain: ['geosite:private'], outboundTag: 'direct', type: 'field' },
+        { network: 'udp', outboundTag: 'block', type: 'field' },
+        { domain: ['geosite:category-ads-all','geosite:category-ads-ir','geosite:malware','geosite:phishing','geosite:cryptominers'], outboundTag: 'block', type: 'field' },
+        { ip: ['geoip:malware','geoip:phishing'], outboundTag: 'block', type: 'field' },
         { domain: ['domain:ir','geosite:category-ir'], outboundTag: 'direct', type: 'field' },
         { ip: ['geoip:ir'], outboundTag: 'direct', type: 'field' },
         { inboundTag: ['domestic-dns'], outboundTag: 'direct', type: 'field' },
