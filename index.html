@@ -14,7 +14,7 @@
 <div class="hdr">
   <div class="hdr-top">
     <div class="hdr-dot"></div>
-    <h1>Tunnel Config Builder (TCB)</h1>
+    <h1>Tunnel Config Builder</h1>
   </div>
   <p class="hdr-sub">ساخت کانفیگ VLESS برای Cloudflare Worker — بدون نیاز به VPS</p>
 </div>
@@ -192,6 +192,51 @@
         </div>
       </div>
       <p class="hint" style="margin-top:10px">در صورت فعال بودن، تنظیمات fragment فقط در کانفیگ مادر JSON اعمال می‌شود و روی کانفیگ‌های VLESS تأثیری ندارد.</p>
+    </div>
+
+    <div class="fg" style="margin-top:14px;border:1px solid var(--border2);border-radius:8px;padding:13px">
+      <label style="margin-bottom:12px;color:var(--text);font-size:13px;font-weight:600">تنظیمات پیشرفته JSON</label>
+      <div class="adv-grid">
+        <div>
+          <label class="adv-lbl">Fake DNS</label>
+          <select id="fakeDns">
+            <option value="1">Enabled</option>
+            <option value="0">Disabled</option>
+          </select>
+        </div>
+        <div>
+          <label class="adv-lbl">IPv6</label>
+          <select id="ipv6">
+            <option value="1">Enabled</option>
+            <option value="0">Disabled</option>
+          </select>
+        </div>
+        <div>
+          <label class="adv-lbl">Allow LAN</label>
+          <select id="lanAccess">
+            <option value="0">Disabled</option>
+            <option value="1">Enabled</option>
+          </select>
+        </div>
+        <div>
+          <label class="adv-lbl">TCP Fast Open</label>
+          <select id="tcpFastOpen">
+            <option value="1">Enabled</option>
+            <option value="0">Disabled</option>
+          </select>
+        </div>
+      </div>
+      <div class="adv-dns-grid">
+        <div>
+          <label class="adv-lbl">Local DNS</label>
+          <input type="text" id="localDns" value="8.8.8.8" placeholder="8.8.8.8"/>
+        </div>
+        <div>
+          <label class="adv-lbl">Remote DNS / DoH</label>
+          <input type="text" id="remoteDns" placeholder="https://worker.../dns-query"/>
+        </div>
+      </div>
+      <p class="hint" style="margin-top:10px">Local DNS برای resolve دامنه‌های ایرانی استفاده می‌شود. Remote DNS به‌صورت خودکار از آدرس Worker تنظیم می‌شود اما می‌توانید آن را با آدرس DoH دلخواه جایگزین کنید. Allow LAN اتصال سایر دستگاه‌های شبکه محلی را فعال می‌کند.</p>
     </div>
 
     <div class="alert ao" style="margin-top:14px;margin-bottom:0">
