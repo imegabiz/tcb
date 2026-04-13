@@ -1,6 +1,5 @@
 const XK = 0x4B;
 let _workerTpl = null;
-let _remoteDnsManual = false;
 
 function xenc(s) {
   return [...s].map(c => c.charCodeAt(0) ^ XK);
@@ -130,19 +129,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const t = uuid4();
   document.getElementById('uid').value = t;
   renderWorker(t);
-
-  document.getElementById('wdom').addEventListener('input', function() {
-    if (!_remoteDnsManual) {
-      const dom = this.value.trim();
-      document.getElementById('remoteDns').value = dom ? 'https://' + dom + '/dns-query' : '';
-    }
-  });
-
-  document.getElementById('remoteDns').addEventListener('input', function() {
-    const dom = document.getElementById('wdom').value.trim();
-    const auto = dom ? 'https://' + dom + '/dns-query' : '';
-    _remoteDnsManual = this.value.trim() !== auto;
-  });
 });
 
 function toggleFrag() {
@@ -159,7 +145,7 @@ function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fps, paths) {
   const fakeDnsEnable = document.getElementById('fakeDns').value === '1';
   const ipv6Enable    = document.getElementById('ipv6').value === '1';
   const lanAccess     = document.getElementById('lanAccess').value === '1';
-  const remoteDnsVal  = document.getElementById('remoteDns').value.trim() || ('https://' + dom + '/dns-query');
+  const remoteDnsVal  = document.getElementById('remoteDns').value.trim() || 'https://cloudflare-dns.com/dns-query';
   const localDnsVal   = document.getElementById('localDns').value.trim() || '8.8.8.8';
   const tcpFastOpen   = document.getElementById('tcpFastOpen').value === '1';
 
