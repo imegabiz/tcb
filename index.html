@@ -276,6 +276,7 @@
       <div class="rh">
         <div class="rt">VLESS configs</div>
         <button class="cb" onclick="cpAll()">⎘ کپی همه</button>
+        <button class="cb" onclick="dlAll()">↓ دانلود TCB.txt</button>
       </div>
       <div class="cfgl" id="lAll"></div>
     </div>
@@ -299,11 +300,17 @@
   <div class="sec">
     <div class="sec-hdr">
       <div class="sec-title"><i style="background:var(--orange)"></i>کانفیگ JSON — My configs 🚀</div>
-      <button class="cb" onclick="cpJson()">⎘ کپی JSON</button>
+      <div style="display:flex;gap:6px">
+        <button class="cb" onclick="cpJson()">⎘ کپی JSON</button>
+        <button class="cb" onclick="dlJson()">↓ دانلود TCB.json</button>
+      </div>
     </div>
     <div class="sec-body">
       <div class="script-wrap">
-        <button class="btn-cpscript" onclick="cpJson()">⎘ کپی</button>
+        <div class="script-btns">
+          <button class="btn-cpscript" onclick="cpJson()">⎘ کپی</button>
+          <button class="btn-cpscript" onclick="dlJson()">↓ دانلود</button>
+        </div>
         <div class="json-area" id="jsonDisplay"></div>
       </div>
       <p class="hint" style="margin-top:10px">این کانفیگ را در v2rayNG یا هر کلاینت سازگار با Xray وارد کن — از حالت least ping برای انتخاب سریع‌ترین سرور استفاده می‌کند.</p>
