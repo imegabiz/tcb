@@ -41,7 +41,7 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 
 ۱. آدرس Worker را در فیلد مربوطه وارد کنید.
 
-۲. IP های سالم Cloudflare را در کادر مربوطه وارد کنید. علاوه بر IP، می‌توانید از برخی دامنه‌ها نیز استفاده کنید (مثلاً chatgpt.com). برای یافتن IP های سالم می‌توانید از ابزار [CF Clean IP Scanner](https://github.com/4n0nymou3/CF-Clean-IP-Scanner) استفاده کنید.
+۲. IP های سالم Cloudflare را در کادر مربوطه وارد کنید. علاوه بر IP، می‌توانید از برخی دامنه‌ها نیز استفاده کنید (مثلاً chatgpt.com). برای یافتن IP های سالم می‌توانید از ابزار [Clean IP Scanner](https://github.com/4n0nymou3/Clean-IP-Scanner) استفاده کنید.
 
 ۳. پورت‌ها، Fingerprint و Path مورد نظر را انتخاب کنید.
 
@@ -316,7 +316,7 @@ kill -9 2341
 
 ## ابزارهای مرتبط
 
-- [CF Clean IP Scanner](https://github.com/4n0nymou3/CF-Clean-IP-Scanner) — یافتن IP های سالم Cloudflare با Termux روی اندروید
+- [Clean IP Scanner](https://github.com/4n0nymou3/Clean-IP-Scanner) — یافتن IP های سالم Cloudflare با Termux روی اندروید
 - [Drill](https://4n0nymou3.github.io/proxy-to-singbox-converter/) — تبدیل کانفیگ‌های VLESS به فرمت Sing-box
 
 ## مجوز
