@@ -1,6 +1,6 @@
 <div align="right" dir="rtl">
 
-# Tunnel Config Builder (TCB) v3.1
+# Tunnel Config Builder (TCB) v3.5
 
 ابزار ساخت کانفیگ VLESS برای Cloudflare Workers — بدون نیاز به VPS یا سرور شخصی
 
@@ -12,11 +12,15 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 
 - ساخت و دانلود مستقیم فایل Worker با Token جاسازی‌شده
 - تولید UUID اتوماتیک یا استفاده از UUID دلخواه
-- پشتیبانی از پورت‌های TLS و WebSocket
+- پشتیبانی از پورت‌های TLS: 443، 8443، 2053، 2083، 2087، 2096
+- پشتیبانی از پورت‌های WebSocket بدون TLS: 80، 8080، 8880، 2052، 2082، 2086، 2095
 - پشتیبانی از چند IP و دامنه همزمان
-- انتخاب TLS Fingerprint برای دور زدن DPI
-- خروجی JSON با قابلیت least ping برای Xray
+- انتخاب TLS Fingerprint از ۱۰ گزینه برای دور زدن DPI
+- انتخاب مسیر WebSocket Path
 - تنظیمات Fragment برای مقابله با فیلترینگ عمیق
+- تنظیمات پیشرفته JSON: Fake DNS، IPv6، Allow LAN، TCP Fast Open، Local DNS، Remote DNS / DoH
+- پشتیبانی از ECH برای رمزنگاری Client Hello و پنهان کردن SNI از دید DPI
+- خروجی JSON با قابلیت least ping برای Xray
 - تبدیل کانفیگ به فرمت Sing-box از طریق ابزار Drill
 
 ## نحوه استفاده
@@ -43,17 +47,57 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 
 ۲. IP های سالم Cloudflare را در کادر مربوطه وارد کنید. علاوه بر IP، می‌توانید از برخی دامنه‌ها نیز استفاده کنید (مثلاً chatgpt.com). برای یافتن IP های سالم می‌توانید از ابزار [Clean IP Scanner](https://github.com/4n0nymou3/Clean-IP-Scanner) استفاده کنید.
 
-۳. پورت‌ها، Fingerprint و Path مورد نظر را انتخاب کنید.
+۳. پورت‌های TLS و WebSocket مورد نظر را انتخاب کنید.
 
-۴. در صورت تمایل، تنظیمات Fragment را فعال کرده و مقادیر دلخواه را وارد کنید.
+۴. TLS Fingerprint و مسیر WebSocket Path را انتخاب کنید.
 
-۵. روی ساخت کانفیگ کلیک کنید.
+۵. در صورت تمایل، تنظیمات Fragment را فعال کرده و مقادیر دلخواه را وارد کنید.
+
+۶. در صورت تمایل، تنظیمات پیشرفته JSON را بر اساس نیاز خود تغییر دهید.
+
+۷. روی ساخت کانفیگ کلیک کنید.
 
 ### مرحله ۴ — استفاده از کانفیگ‌ها
 
 - کانفیگ‌های VLESS تولید شده را در v2rayNG یا کلاینت‌های مشابه وارد کنید.
 - کانفیگ JSON خروجی را در کلاینت‌های سازگار با Xray مانند v2rayNG وارد کنید تا از حالت least ping بهره‌مند شوید.
 - برای تبدیل کانفیگ‌ها به فرمت Sing-box از ابزار [Drill](https://4n0nymou3.github.io/proxy-to-singbox-converter/) استفاده کنید.
+
+## راهنمای تنظیمات
+
+### TLS Fingerprint
+
+این تنظیم مشخص می‌کند که کلاینت شما در TLS handshake خود را به عنوان چه مرورگر یا دستگاهی معرفی کند. سیستم‌های DPI با بررسی الگوی TLS می‌توانند ترافیک پروکسی را تشخیص دهند؛ انتخاب یک Fingerprint معمول مثل chrome یا firefox این تشخیص را دشوارتر می‌کند. گزینه‌های موجود:
+
+`chrome` — `firefox` — `safari` — `ios` — `android` — `edge` — `360` — `qq` — `random` — `randomized`
+
+### WebSocket Path
+
+مسیر WebSocket که در کانفیگ‌ها استفاده می‌شود. گزینه‌های موجود: `/vless`، `/proxy`، `/v2ray`، `/ws`، `/`
+
+### Fragment
+
+با فعال کردن Fragment، داده‌های TLS handshake به قطعات کوچک‌تر تقسیم می‌شوند که تشخیص آن توسط DPI را دشوارتر می‌کند. این تنظیم فقط در کانفیگ JSON اعمال می‌شود و روی کانفیگ‌های VLESS تأثیری ندارد. Fragment و ECH را نمی‌توان همزمان فعال کرد.
+
+تنظیمات Fragment:
+- **Fragment Packets**: نوع داده‌ای که Fragment می‌شود. مقدار `tlshello` برای تقطیع TLS Client Hello توصیه می‌شود.
+- **Fragment Interval**: فاصله زمانی بین ارسال قطعات (میلی‌ثانیه).
+- **Fragment Length**: اندازه هر قطعه (بایت).
+
+### ECH — Encrypted Client Hello
+
+ECH یک لایه رمزنگاری اضافه روی TLS handshake است که نام دامنه مقصد (SNI) را از دید سیستم‌های DPI پنهان می‌کند. با فعال کردن ECH، Xray کلید رمزنگاری دامنه Worker شما را به صورت خودکار از سرور DNS دریافت می‌کند و Client Hello را قبل از ارسال رمزنگاری می‌کند.
+
+فعال کردن چک‌باکس به‌تنهایی کافی است. آدرس پیش‌فرض در کادر DNS (DoH Cloudflare) برای اکثر کاربران مناسب است. اگر DoH Proxy شخصی دارید، آدرس آن را جایگزین کنید تا پایداری بیشتری داشته باشید. ECH فقط در کانفیگ JSON Normal (بدون Fragment) اعمال می‌شود.
+
+### تنظیمات پیشرفته JSON
+
+- **Fake DNS**: DNS جعلی برای بهبود سرعت resolve در کلاینت.
+- **IPv6**: فعال یا غیرفعال کردن پشتیبانی از IPv6.
+- **Allow LAN**: امکان استفاده سایر دستگاه‌های شبکه محلی از پروکسی.
+- **TCP Fast Open**: بهبود سرعت اتصال با کاهش تأخیر handshake.
+- **Local DNS**: سرور DNS برای resolve دامنه‌های ایرانی (پیش‌فرض: 8.8.8.8).
+- **Remote DNS / DoH**: سرور DNS برای ترافیک خارج از ایران (پیش‌فرض: DoH Cloudflare). می‌توانید از ابزار [DoH Proxy](https://github.com/4n0nymou3/cloudflare-doh-proxy) یک سرور DoH اختصاصی روی Cloudflare بسازید.
 
 ## اجرای آفلاین روی دستگاه شخصی
 
@@ -230,7 +274,7 @@ python -m SimpleHTTPServer 8080
 
 <div align="right" dir="rtl">
 
-> **توضیح:** عدد `8080` شماره پورت است — یعنی «سرور روی درگاه شماره ۸۰۸۰ گوش بده». اگر این پورت اشغال بود می‌توانید عدد دیگری مثل `8000` یا `9090` را جایگزین کنید.
+> **توضیح:** عدد `8080` شماره پورت است. اگر این پورت اشغال بود می‌توانید عدد دیگری مثل `8000` یا `9090` را جایگزین کنید.
 
 وقتی سرور با موفقیت اجرا شود، چیزی شبیه به این می‌بینید:
 
@@ -255,8 +299,6 @@ http://localhost:8080
 ```
 
 <div align="right" dir="rtl">
-
-> **توضیح:** `localhost` یعنی «همین دستگاه خودم». با این آدرس به سرور محلی که در مرحله قبل راه‌اندازی کردید متصل می‌شوید و ابزار مثل یک سایت معمولی در مرورگر باز می‌شود.
 
 ---
 
@@ -308,15 +350,14 @@ kill -9 PID
 kill -9 2341
 ```
 
-<div align="right" dir="rtl">
-
-> **توضیح:** دستور `kill -9` یعنی «این برنامه را فوری و اجباری ببند». عدد `-9` یک سیگنال اجباری است که برنامه نمی‌تواند آن را نادیده بگیرد.
-
 ---
+
+<div align="right" dir="rtl">
 
 ## ابزارهای مرتبط
 
 - [Clean IP Scanner](https://github.com/4n0nymou3/Clean-IP-Scanner) — یافتن IP های سالم Cloudflare با Termux روی اندروید
+- [DoH Proxy](https://github.com/4n0nymou3/cloudflare-doh-proxy) — ساخت سرور DNS over HTTPS اختصاصی روی Cloudflare
 - [Drill](https://4n0nymou3.github.io/proxy-to-singbox-converter/) — تبدیل کانفیگ‌های VLESS به فرمت Sing-box
 
 ## مجوز
