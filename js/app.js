@@ -346,7 +346,8 @@ function buildConfig(token, dom, ip, port, security, fp, path, label) {
 
 function gen() {
   const token = document.getElementById('uid').value.trim();
-  const dom   = document.getElementById('wdom').value.trim();
+  const raw_dom = document.getElementById('wdom').value.trim();
+  const dom = raw_dom.replace(/^https?:\/\//i, '').replace(/\/+$/, '');
   const raw   = document.getElementById('ips').value.trim();
 
   if (!token) { toast('Token موجود نیست'); return; }
