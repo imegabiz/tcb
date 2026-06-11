@@ -149,7 +149,7 @@ select option{background:var(--card);color:var(--text)}
 .ck-lbl input[type=checkbox]{accent-color:var(--blue);cursor:pointer}
 .ck-lbl:has(input:checked){background:var(--gb);border-color:rgba(88,166,255,.4);color:var(--blue)}
 
-.frag-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;transition:opacity .2s}
+.frag-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:10px;transition:opacity .2s;direction:ltr}
 .frag-grid.disabled{opacity:.35;pointer-events:none}
 @media(max-width:560px){.frag-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:380px){.frag-grid{grid-template-columns:1fr}}
@@ -187,3 +187,53 @@ select option{background:var(--card);color:var(--text)}
 .toast.show{transform:translateX(-50%) translateY(0)}
 @keyframes spin{to{transform:rotate(360deg)}}
 .sp{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+
+/* ─── Spacing utilities ─────────────────────────────────────── */
+.mt-6{margin-top:6px}
+.mt-8{margin-top:8px}
+.mt-10{margin-top:10px}
+.mt-12{margin-top:12px}
+.mt-14{margin-top:14px}
+.mb-0{margin-bottom:0}
+.mb-8{margin-bottom:8px}
+.mb-9{margin-bottom:9px}
+.mb-10{margin-bottom:10px}
+.mb-12{margin-bottom:12px}
+.mb-13{margin-bottom:13px}
+
+/* ─── Layout utilities ───────────────────────────────────────── */
+.lbl-ltr{direction:ltr;text-align:left}
+.port-row{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-start;direction:ltr}
+.toggle-row{display:flex;justify-content:flex-start;direction:ltr}
+.flex-gap-6{display:flex;gap:6px}
+.btn-link{text-decoration:none;display:block}
+
+/* ─── Text utilities ─────────────────────────────────────────── */
+.txt-strong{color:var(--text)}
+.ico{font-size:15px}
+.ico-lg{font-size:16px}
+
+/* ─── Settings box (Fragment / Advanced JSON) ────────────────── */
+.settings-box{border:1px solid var(--border2);border-radius:8px;padding:13px}
+.box-lbl{margin-bottom:9px;color:var(--text);font-size:13px;font-weight:600;display:block}
+
+/* ─── Stat colors ────────────────────────────────────────────── */
+.sn-blue{color:var(--blue)}
+.sn-orange{color:var(--orange)}
+.sn-green{color:var(--green)}
+
+/* ─── Section color variants ─────────────────────────────────── */
+.sec-green{border-color:rgba(63,185,80,.35)}
+.sec-hdr-green{border-bottom-color:rgba(63,185,80,.2)}
+
+/* ─── Dot color variants for sec-title ───────────────────────── */
+.sec-title i.dot-green{background:var(--green)}
+.sec-title i.dot-orange{background:var(--orange)}
+
+/* ─── Special-purpose bgen button variants ───────────────────── */
+.bgen.btn-scanner{background:#1a4d3a;padding:10px;font-size:13px}
+.bgen.btn-scanner:hover{background:#1f5c45;box-shadow:none}
+.bgen.btn-doh{background:#1a3a4d;border-color:#2080b0;padding:8px 12px;font-size:12px;gap:7px}
+.bgen.btn-doh:hover{background:#1e4a63;box-shadow:none}
+.bgen.btn-drill{background:#1a6b3a;border-color:#2ea043;gap:10px}
+.bgen.btn-drill:hover{background:#2ea043;box-shadow:none}
