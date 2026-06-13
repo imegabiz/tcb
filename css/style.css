@@ -60,7 +60,7 @@ a.lk:hover{text-decoration:underline}
   direction:ltr;text-align:left;color:#adbac7;
   white-space:pre;overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;
 }
-.k{color:#bc8cff}.s{color:#3fb950}.c{color:#484f58}.n{color:#ffa657}
+.k{color:#bc8cff}.s{color:#3fb950}.n{color:#ffa657}
 .script-btns{position:absolute;top:8px;right:8px;z-index:2;display:flex;gap:5px}
 .btn-cpscript{
   padding:4px 10px;background:var(--card);border:1px solid var(--border);
@@ -104,6 +104,7 @@ select option{background:var(--card);color:var(--text)}
 .bgen:disabled{opacity:.55;cursor:not-allowed}
 
 #results{display:none}
+.dv{border:none;height:1px;background:var(--border);margin:24px 0}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0 13px}
 .stat{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:13px 8px;text-align:center}
 .sn{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:700;display:block}
@@ -188,7 +189,6 @@ select option{background:var(--card);color:var(--text)}
 @keyframes spin{to{transform:rotate(360deg)}}
 .sp{display:inline-block;width:13px;height:13px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 
-/* ─── Spacing utilities ─────────────────────────────────────── */
 .mt-6{margin-top:6px}
 .mt-8{margin-top:8px}
 .mt-10{margin-top:10px}
@@ -198,39 +198,31 @@ select option{background:var(--card);color:var(--text)}
 .mb-8{margin-bottom:8px}
 .mb-9{margin-bottom:9px}
 .mb-10{margin-bottom:10px}
-.mb-12{margin-bottom:12px}
 .mb-13{margin-bottom:13px}
 
-/* ─── Layout utilities ───────────────────────────────────────── */
 .lbl-ltr{direction:ltr;text-align:left}
 .port-row{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-start;direction:ltr}
 .toggle-row{display:flex;justify-content:flex-start;direction:ltr}
 .flex-gap-6{display:flex;gap:6px}
 .btn-link{text-decoration:none;display:block}
 
-/* ─── Text utilities ─────────────────────────────────────────── */
 .txt-strong{color:var(--text)}
 .ico{font-size:15px}
 .ico-lg{font-size:16px}
 
-/* ─── Settings box (Fragment / Advanced JSON) ────────────────── */
 .settings-box{border:1px solid var(--border2);border-radius:8px;padding:13px}
 .box-lbl{margin-bottom:9px;color:var(--text);font-size:13px;font-weight:600;display:block}
 
-/* ─── Stat colors ────────────────────────────────────────────── */
 .sn-blue{color:var(--blue)}
 .sn-orange{color:var(--orange)}
 .sn-green{color:var(--green)}
 
-/* ─── Section color variants ─────────────────────────────────── */
 .sec-green{border-color:rgba(63,185,80,.35)}
 .sec-hdr-green{border-bottom-color:rgba(63,185,80,.2)}
 
-/* ─── Dot color variants for sec-title ───────────────────────── */
 .sec-title i.dot-green{background:var(--green)}
 .sec-title i.dot-orange{background:var(--orange)}
 
-/* ─── Special-purpose bgen button variants ───────────────────── */
 .bgen.btn-scanner{background:#1a4d3a;padding:10px;font-size:13px}
 .bgen.btn-scanner:hover{background:#1f5c45;box-shadow:none}
 .bgen.btn-doh{background:#1a3a4d;border-color:#2080b0;padding:8px 12px;font-size:12px;gap:7px}
