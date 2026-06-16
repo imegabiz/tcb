@@ -1,6 +1,6 @@
 <div align="right" dir="rtl">
 
-# Tunnel Config Builder (TCB) v3.9
+# Tunnel Config Builder (TCB) v4.0
 
 ابزار ساخت کانفیگ VLESS برای Cloudflare Workers — بدون نیاز به VPS یا سرور شخصی
 
