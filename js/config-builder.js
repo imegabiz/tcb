@@ -103,7 +103,7 @@ export function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fp, settings
 
   const dnsServers = [];
   if (fakeDnsEnable) {
-    dnsServers.push({ address: 'fakedns', domains: ['geosite:cn', 'domain:ir', 'geosite:category-ir'] });
+    dnsServers.push({ address: 'fakedns', domains: ['geosite:ir', 'domain:ir', 'geosite:category-ir'] });
   }
   dnsServers.push(remoteDnsVal);
   dnsServers.push({ address: localDnsVal, domains: ['domain:ir', 'geosite:category-ir'], skipFallback: true, tag: 'domestic-dns' });
