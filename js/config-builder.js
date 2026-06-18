@@ -99,7 +99,7 @@ export function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fp, settings
 
   outbounds.push({ protocol: 'freedom', settings: { domainStrategy: 'UseIP' }, tag: 'direct' });
   outbounds.push({ protocol: 'blackhole', settings: { response: { type: 'http' } }, tag: 'block' });
-  outbounds.push({ protocol: 'dns', settings: { nonIPQuery: 'reject' }, tag: 'dns-out' });
+  outbounds.push({ protocol: 'dns', settings: { rules: [{ action: 'hijack' }] }, tag: 'dns-out' });
 
   const dnsServers = [];
   if (fakeDnsEnable) {
@@ -111,6 +111,7 @@ export function buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fp, settings
   const sniffingDestOverride = fakeDnsEnable ? ['http', 'tls', 'fakedns'] : ['http', 'tls'];
 
   const configObj = {
+    version: { min: '26.2.6' },
     dns: {
       hosts: {
         'domain:googleapis.cn': 'googleapis.com',
