@@ -1,5 +1,7 @@
 import { buildWorker, hl } from './worker-builder.js';
 import { buildConfig, buildJsonConfig } from './config-builder.js';
+import { buildSingboxConfig } from './singbox-builder.js';
+import { buildClashConfig } from './clash-builder.js';
 import { toast, getChecked, row, downloadFile } from './ui.js';
 
 let allC = [];
@@ -141,6 +143,12 @@ function gen() {
     const jsonStr = buildJsonConfig(token, dom, ips, tlsPorts, wsPorts, fp, settings);
     document.getElementById('jsonDisplay').textContent = jsonStr;
 
+    const singboxStr = buildSingboxConfig(token, dom, ips, tlsPorts, wsPorts, fp, settings);
+    document.getElementById('singboxDisplay').textContent = singboxStr;
+
+    const clashStr = buildClashConfig(token, dom, ips, tlsPorts, wsPorts, fp, settings);
+    document.getElementById('clashDisplay').textContent = clashStr;
+
     document.getElementById('results').style.display = 'block';
     document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
 
@@ -164,6 +172,35 @@ function dlJson() {
   const fragEnabled = document.getElementById('fragEnable').checked;
   const fileName = fragEnabled ? 'TCB_Fragment.json' : 'TCB_Normal.json';
   downloadFile(txt, fileName, 'application/json');
+  toast('فایل ' + fileName + ' دانلود شد');
+}
+
+function cpSingbox() {
+  const txt = document.getElementById('singboxDisplay').textContent;
+  if (!txt) return;
+  navigator.clipboard.writeText(txt).then(() => toast('کانفیگ Sing-box کپی شد'));
+}
+
+function dlSingbox() {
+  const txt = document.getElementById('singboxDisplay').textContent;
+  if (!txt) return;
+  const fragEnabled = document.getElementById('fragEnable').checked;
+  const fileName = fragEnabled ? 'TCB_Singbox_Fragment.json' : 'TCB_Singbox_Normal.json';
+  downloadFile(txt, fileName, 'application/json');
+  toast('فایل ' + fileName + ' دانلود شد');
+}
+
+function cpClash() {
+  const txt = document.getElementById('clashDisplay').textContent;
+  if (!txt) return;
+  navigator.clipboard.writeText(txt).then(() => toast('کانفیگ Clash کپی شد'));
+}
+
+function dlClash() {
+  const txt = document.getElementById('clashDisplay').textContent;
+  if (!txt) return;
+  const fileName = 'TCB_Clash.yaml';
+  downloadFile(txt, fileName, 'text/yaml');
   toast('فایل ' + fileName + ' دانلود شد');
 }
 
@@ -197,6 +234,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-dl-json').addEventListener('click', dlJson);
   document.getElementById('btn-cp-json-2').addEventListener('click', cpJson);
   document.getElementById('btn-dl-json-2').addEventListener('click', dlJson);
+  document.getElementById('btn-cp-singbox').addEventListener('click', cpSingbox);
+  document.getElementById('btn-dl-singbox').addEventListener('click', dlSingbox);
+  document.getElementById('btn-cp-singbox-2').addEventListener('click', cpSingbox);
+  document.getElementById('btn-dl-singbox-2').addEventListener('click', dlSingbox);
+  document.getElementById('btn-cp-clash').addEventListener('click', cpClash);
+  document.getElementById('btn-dl-clash').addEventListener('click', dlClash);
+  document.getElementById('btn-cp-clash-2').addEventListener('click', cpClash);
+  document.getElementById('btn-dl-clash-2').addEventListener('click', dlClash);
 
   document.getElementById('lAll').addEventListener('click', e => {
     const btn = e.target.closest('.bcp');
