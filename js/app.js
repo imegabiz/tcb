@@ -78,6 +78,7 @@ function collectSettings() {
     fragPackets:  document.getElementById('fragPackets').value.trim() || 'tlshello',
     fragLength:   document.getElementById('fragLength').value.trim()  || '10-20',
     fragInterval: document.getElementById('fragInterval').value.trim() || '10-20',
+    fragMaxSplit: document.getElementById('fragMaxSplit').value.trim() || '10',
     fakeDnsEnable: document.getElementById('fakeDns').value === '1',
     ipv6Enable:   document.getElementById('ipv6').value === '1',
     lanAccess:    document.getElementById('lanAccess').value === '1',
