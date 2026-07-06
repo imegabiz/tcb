@@ -1,6 +1,6 @@
 <div align="right" dir="rtl">
 
-# Tunnel Config Builder (TCB) v4.2
+# Tunnel Config Builder (TCB) v4.3
 
 ابزار ساخت کانفیگ VLESS برای Cloudflare Workers — بدون نیاز به VPS یا سرور شخصی
 
@@ -21,6 +21,7 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 - تنظیمات پیشرفته JSON: Fake DNS، IPv6، Allow LAN، TCP Fast Open، Local DNS، Remote DNS / DoH
 - پشتیبانی از ECH برای رمزنگاری Client Hello و پنهان کردن SNI از دید DPI
 - تولید همزمان کانفیگ در چهار فرمت: لینک VLESS، JSON برای هسته Xray (با قابلیت least ping)، JSON برای Sing-box و JSON برای Clash / Mihomo
+- اکسپورت و ایمپورت تمام تنظیمات صفحه در قالب یک فایل، برای پشتیبان‌گیری یا انتقال سریع تنظیمات
 
 ## نحوه استفاده
 
@@ -39,6 +40,8 @@ Tunnel Config Builder یک ابزار تحت وب است که به شما امک
 ۳. در داشبورد Cloudflare روی Edit Code کلیک کنید، کد پیش‌فرض را پاک کنید، کد کپی‌شده را Paste کنید و Deploy کنید.
 
 ۴. آدرسی که Cloudflare بعد از Deploy نمایش می‌دهد (مثل `myworker.username.workers.dev`) را کپی کنید.
+
+با دکمه «📤 اکسپورت تنظیمات» می‌توانید در هر مرحله یک فایل پشتیبان از تمام تنظیمات وارد شده در صفحه (Token، آدرس Worker، IP ها، پورت‌ها، Fingerprint، WebSocket Path، تنظیمات Fragment، تنظیمات پیشرفته JSON، ECH، DNS و نام کانفیگ JSON) دانلود کنید. با دکمه «📥 ایمپورت تنظیمات» می‌توانید همان فایل را دوباره در صفحه بارگذاری کنید تا تمام تنظیمات به‌صورت خودکار بازیابی شوند. این دکمه فقط فایل‌های اکسپورت‌شده از همین ابزار را می‌پذیرد.
 
 ### مرحله ۳ — ساخت کانفیگ
 
