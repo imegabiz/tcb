@@ -10,22 +10,26 @@
 <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body>
-<div class="wrap">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="hdr">
+      <div class="hdr-top">
+        <div class="hdr-dot"></div>
+        <h1>Tunnel Config Builder (TCB) v4.4</h1>
+      </div>
+      <p class="hdr-sub">ساخت کانفیگ VLESS برای Cloudflare Worker — بدون نیاز به VPS</p>
+    </div>
 
-<div class="hdr">
-  <div class="hdr-top">
-    <div class="hdr-dot"></div>
-    <h1>Tunnel Config Builder (TCB) v4.3</h1>
+    <div class="steps">
+      <div class="step active" id="sn1"><div class="step-n">1</div><span>ساخت Worker</span></div>
+      <div class="step" id="sn2"><div class="step-n">2</div><span>Token + دامنه</span></div>
+      <div class="step" id="sn3"><div class="step-n">3</div><span>IP های سالم</span></div>
+      <div class="step" id="sn4"><div class="step-n">4</div><span>کانفیگ‌ها</span></div>
+    </div>
   </div>
-  <p class="hdr-sub">ساخت کانفیگ VLESS برای Cloudflare Worker — بدون نیاز به VPS</p>
 </div>
 
-<div class="steps">
-  <div class="step active" id="sn1"><div class="step-n">1</div><span>ساخت Worker</span></div>
-  <div class="step" id="sn2"><div class="step-n">2</div><span>Token + دامنه</span></div>
-  <div class="step" id="sn3"><div class="step-n">3</div><span>IP های سالم</span></div>
-  <div class="step" id="sn4"><div class="step-n">4</div><span>کانفیگ‌ها</span></div>
-</div>
+<div class="wrap">
 
 <div class="sec">
   <div class="sec-hdr">
@@ -52,12 +56,17 @@
         <div class="gb2">
           <div class="gtitle">اول به مرحله ۲ برو، Token بساز، سپس کد را کپی یا دانلود کن</div>
           <div class="gdesc">Token به‌صورت خودکار داخل کد جاگذاری می‌شود. می‌توانی کد را کپی کنی یا فایل <code>worker.js</code> را مستقیم دانلود کنی. در Worker: <code>Edit Code</code> ← همه را پاک کن ← Paste کن ← <code>Deploy</code>. برای آپلود فایل نیز می‌توانی از گزینه Upload در داشبورد استفاده کنی.</div>
-          <div class="script-wrap">
-            <div class="script-btns">
-              <button class="btn-cpscript" id="btn-cp-worker">⎘ کپی کد</button>
-              <button class="btn-cpscript" id="btn-dl-worker">↓ دانلود .js</button>
+          <div class="code-viewer">
+            <div class="code-viewer-header">
+              <div class="code-viewer-filename"><span class="lang-dot dot-js"></span><span class="fname">worker.js</span></div>
+              <div class="code-viewer-actions">
+                <button class="btn-cpscript" id="btn-cp-worker">⎘ کپی کد</button>
+                <button class="btn-cpscript" id="btn-dl-worker">↓ دانلود .js</button>
+              </div>
             </div>
-            <div class="script-area" id="workerDisplay"></div>
+            <div class="code-viewer-body">
+              <div class="code-box" id="workerDisplay"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -292,12 +301,17 @@
       </div>
     </div>
     <div class="sec-body">
-      <div class="script-wrap">
-        <div class="script-btns">
-          <button class="btn-cpscript" id="btn-cp-json-2">⎘ کپی</button>
-          <button class="btn-cpscript" id="btn-dl-json-2">↓ دانلود</button>
+      <div class="code-viewer">
+        <div class="code-viewer-header">
+          <div class="code-viewer-filename"><span class="lang-dot dot-json"></span><span class="fname">TCB.json</span></div>
+          <div class="code-viewer-actions">
+            <button class="btn-cpscript" id="btn-cp-json-2">⎘ کپی</button>
+            <button class="btn-cpscript" id="btn-dl-json-2">↓ دانلود</button>
+          </div>
         </div>
-        <div class="json-area" id="jsonDisplay"></div>
+        <div class="code-viewer-body lg">
+          <div class="code-box" id="jsonDisplay"></div>
+        </div>
       </div>
       <p class="hint mt-10">این کانفیگ را در v2rayNG یا هر کلاینت سازگار با Xray وارد کن — از حالت least ping برای انتخاب سریع‌ترین سرور استفاده می‌کند.</p>
     </div>
@@ -311,12 +325,17 @@
       </div>
     </div>
     <div class="sec-body">
-      <div class="script-wrap">
-        <div class="script-btns">
-          <button class="btn-cpscript" id="btn-cp-singbox-2">⎘ کپی</button>
-          <button class="btn-cpscript" id="btn-dl-singbox-2">↓ دانلود</button>
+      <div class="code-viewer">
+        <div class="code-viewer-header">
+          <div class="code-viewer-filename"><span class="lang-dot dot-json"></span><span class="fname">TCB_Singbox.json</span></div>
+          <div class="code-viewer-actions">
+            <button class="btn-cpscript" id="btn-cp-singbox-2">⎘ کپی</button>
+            <button class="btn-cpscript" id="btn-dl-singbox-2">↓ دانلود</button>
+          </div>
         </div>
-        <div class="json-area" id="singboxDisplay"></div>
+        <div class="code-viewer-body lg">
+          <div class="code-box" id="singboxDisplay"></div>
+        </div>
       </div>
       <p class="hint mt-10">این کانفیگ مستقیماً برای Sing-box و کلاینت‌های مبتنی بر هسته‌ی Sing-box ساخته شده. به دلیل Deprecated شدن فیلد ECH در نسخه فعلی Sing-box، این کانفیگ بدون ECH ساخته می‌شود (Fragment و سایر تنظیمات شما اعمال شده‌اند).</p>
     </div>
@@ -330,12 +349,17 @@
       </div>
     </div>
     <div class="sec-body">
-      <div class="script-wrap">
-        <div class="script-btns">
-          <button class="btn-cpscript" id="btn-cp-clash-2">⎘ کپی</button>
-          <button class="btn-cpscript" id="btn-dl-clash-2">↓ دانلود</button>
+      <div class="code-viewer">
+        <div class="code-viewer-header">
+          <div class="code-viewer-filename"><span class="lang-dot dot-yaml"></span><span class="fname">TCB.yaml</span></div>
+          <div class="code-viewer-actions">
+            <button class="btn-cpscript" id="btn-cp-clash-2">⎘ کپی</button>
+            <button class="btn-cpscript" id="btn-dl-clash-2">↓ دانلود</button>
+          </div>
         </div>
-        <div class="json-area" id="clashDisplay"></div>
+        <div class="code-viewer-body lg">
+          <div class="code-box" id="clashDisplay"></div>
+        </div>
       </div>
       <p class="hint mt-10">فرمت و دانلود این کانفیگ با پسوند <code>.yaml</code> انجام می‌شود تا کلاینت‌های Clash/Mihomo آن را به‌عنوان پروفایل بشناسند. توجه: فرمت Clash/Mihomo اصولاً قابلیت Fragment ندارد، بنابراین تنظیمات Fragment روی این کانفیگ اعمال نمی‌شود.</p>
     </div>
