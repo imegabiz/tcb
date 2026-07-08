@@ -31,3 +31,75 @@ export function downloadFile(content, filename, mimeType) {
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+
+export function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+export function highlightJsonLine(line) {
+  const escaped = escapeHtml(line);
+  return escaped.replace(
+    /("(?:\\.|[^"\\])*"(\s*:)?|\btrue\b|\bfalse\b|\bnull\b|-?\d+(?:\.\d+)?)/g,
+    function (match) {
+      let cls = 'jn';
+      if (/^"/.test(match)) {
+        cls = /:$/.test(match) ? 'jk' : 'js';
+      } else if (/^(true|false)$/.test(match)) {
+        cls = 'jb';
+      } else if (/^null$/.test(match)) {
+        cls = 'jz';
+      }
+      return '<span class="' + cls + '">' + match + '</span>';
+    }
+  );
+}
+
+function highlightYamlRest(text) {
+  if (!text) return text;
+  return text.replace(
+    /(#.*$)|("(?:\\.|[^"\\])*")|(\btrue\b|\bfalse\b|\bnull\b)|(-?\b\d+(?:\.\d+)?\b)/g,
+    function (match, comment, str, bool, num) {
+      if (comment) return '<span class="jc">' + comment + '</span>';
+      if (str) return '<span class="js">' + str + '</span>';
+      if (bool) return '<span class="jb">' + bool + '</span>';
+      if (num) return '<span class="jn">' + num + '</span>';
+      return match;
+    }
+  );
+}
+
+export function highlightYamlLine(line) {
+  const escaped = escapeHtml(line);
+  const kv = escaped.match(/^(\s*(?:-\s+)?)([A-Za-z0-9_.-]+)(:)(.*)$/);
+  if (kv) {
+    return kv[1] + '<span class="jk">' + kv[2] + kv[3] + '</span>' + highlightYamlRest(kv[4]);
+  }
+  return highlightYamlRest(escaped);
+}
+
+export function highlightJsLine(line) {
+  const escaped = escapeHtml(line);
+  return escaped.replace(
+    /('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*"|\b(?:import|from|const|let|async|await|return|if|else|for|of|new|try|catch|null|true|false|export|default|function)\b|\b\d+\b)/g,
+    function (match) {
+      if (/^['"]/.test(match)) return '<span class="s">' + match + '</span>';
+      if (/^\d/.test(match)) return '<span class="n">' + match + '</span>';
+      return '<span class="k">' + match + '</span>';
+    }
+  );
+}
+
+export function renderCodeBlock(elId, text, lineHighlighter) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  const raw = (text || '').replace(/\n$/, '');
+  const lines = raw.split('\n');
+  el.innerHTML = lines.map(function (line, i) {
+    const content = lineHighlighter ? (lineHighlighter(line) || ' ') : (escapeHtml(line) || ' ');
+    return '<div class="code-line"><span class="code-gutter">' + (i + 1) +
+      '</span><span class="code-content">' + content + '</span></div>';
+  }).join('');
+}
