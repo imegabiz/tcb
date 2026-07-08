@@ -37,14 +37,3 @@ async function _hw(r){const[cl,sv]=Object.values(new WebSocketPair());sv.accept(
 
   return hardcoded.replace('__WORKER_TOKEN_ARRAY__', `[${enc.join(',')}]`);
 }
-
-export function hl(code) {
-  let h = code
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
-  h = h.replace(/\b(import|from|const|let|async|await|return|if|else|for|of|new|try|catch|null|true|false)\b/g, '<span class="k">$1</span>');
-  h = h.replace(/('[^']*')/g, '<span class="s">$1</span>');
-  h = h.replace(/\b(\d+)\b/g, '<span class="n">$1</span>');
-  return h;
-}
