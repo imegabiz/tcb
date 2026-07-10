@@ -35,9 +35,8 @@ h1{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:600;color:v
 .step.active{background:#0d1926;color:var(--blue)}.step.active .step-n{border-color:var(--blue);color:var(--blue)}
 .step.done{background:#0a1a0f;color:var(--green)}.step.done .step-n{border-color:var(--green);color:var(--green);background:var(--gg)}
 @media(max-width:500px){
-  .steps{flex-direction:column}
-  .step{border-right:none;border-bottom:1px solid var(--border)}
-  .step:last-child{border-bottom:none}
+  .step{flex-direction:column;justify-content:center;gap:4px;padding:8px 3px;font-size:9px;white-space:normal;text-align:center;line-height:1.25}
+  .step-n{width:16px;height:16px;font-size:8px}
 }
 
 .sec{background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:12px;overflow:hidden;box-shadow:0 8px 24px rgba(1,4,9,.35);transition:border-color .15s}
