@@ -13,7 +13,7 @@ export function buildConfig(token, dom, ip, port, security, fp, path, label, ech
       params.set('ech', echDns);
     }
   }
-  const name = encodeURIComponent(`CF-${label}`);
+  const name = encodeURIComponent(`TCB-${label}`);
   return `vless://${token}@${h}:${port}?${params}#${name}`;
 }
 
@@ -32,7 +32,7 @@ export function buildTrojanConfig(password, dom, ip, port, security, fp, path, l
       params.set('ech', echDns);
     }
   }
-  const name = encodeURIComponent(`CF-${label}`);
+  const name = encodeURIComponent(`TCB-${label}`);
   return `trojan://${encodeURIComponent(password)}@${h}:${port}?${params}#${name}`;
 }
 
