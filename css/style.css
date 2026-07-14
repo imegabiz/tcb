@@ -232,6 +232,8 @@ select option{background:var(--card);color:var(--text)}
 
 .footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--border);text-align:center}
 .footer p{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim)}
+.footer-link{color:var(--blue);text-decoration:none;font-weight:600;transition:.15s}
+.footer-link:hover{color:var(--blue-em);text-decoration:underline}
 
 .toast{
   position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(68px);
