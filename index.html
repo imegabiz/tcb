@@ -15,7 +15,7 @@
     <div class="hdr">
       <div class="hdr-top">
         <div class="hdr-dot"></div>
-        <h1>Tunnel Config Builder (TCB) v4.7</h1>
+        <h1>Tunnel Config Builder (TCB) v4.8</h1>
       </div>
       <p class="hdr-sub">ساخت کانفیگ VLESS برای Cloudflare Worker — بدون نیاز به VPS</p>
     </div>
@@ -296,6 +296,33 @@
         </div>
       </div>
       <p class="hint mt-10">Local DNS برای resolve دامنه‌های ایرانی استفاده می‌شود. Remote DNS به‌صورت پیشفرض روی Cloudflare DoH تنظیم است و می‌توانید آن را با هر آدرس DoH دلخواه جایگزین کنید. با ابزار DoH Proxy می‌توانید یک سرور DoH اختصاصی روی Cloudflare بسازید و آدرس آن را اینجا وارد کنید. Allow LAN اتصال سایر دستگاه‌های شبکه محلی را فعال می‌کند. ECH فقط در حالت Normal (بدون Fragment) روی کانفیگ JSON و کانفیگ‌های فرمت URL اعمال می‌شود.</p>
+    </div>
+
+    <div class="fg mt-14 settings-box">
+      <label class="box-lbl">قوانین مسیریابی</label>
+      <label class="adv-lbl mb-8">Bypass rules — کشورهایی که به‌صورت مستقیم مسیریابی شوند</label>
+      <div class="port-row mb-10">
+        <label class="ck-lbl"><input type="checkbox" id="routeIr" checked> ایران</label>
+        <label class="ck-lbl"><input type="checkbox" id="routeCn"> چین</label>
+        <label class="ck-lbl"><input type="checkbox" id="routeRu"> روسیه</label>
+      </div>
+      <p class="hint mt-8">کشورهایی که تیک می‌زنید، ترافیک و DNS مربوط به دامنه‌ها و آی‌پی‌های همان کشور به‌صورت مستقیم (بدون عبور از پروکسی) مسیریابی می‌شود؛ این قوانین در هر سه فرمت خروجی JSON، Sing-box و Clash اعمال می‌شوند. حداقل یک کشور باید انتخاب شده باشد.</p>
+      <label class="adv-lbl mb-8 mt-12">Block rules — دسته‌هایی که مسدود شوند</label>
+      <div class="port-row mb-10">
+        <label class="ck-lbl"><input type="checkbox" id="blockAds" checked> Ads</label>
+        <label class="ck-lbl"><input type="checkbox" id="blockPorn" checked> Porn</label>
+        <label class="ck-lbl"><input type="checkbox" id="blockQuic" checked> QUIC</label>
+        <label class="ck-lbl"><input type="checkbox" id="blockMalware" checked> Malware</label>
+        <label class="ck-lbl"><input type="checkbox" id="blockPhishing" checked> Phishing</label>
+        <label class="ck-lbl"><input type="checkbox" id="blockCryptominers" checked> Cryptominers</label>
+      </div>
+      <p class="hint mt-8">دسته‌هایی که تیک می‌زنید در هر سه فرمت خروجی مسدود می‌شوند. QUIC یعنی مسدود شدن ترافیک UDP (شامل HTTP/3) تا مرورگر به‌صورت خودکار روی HTTPS معمولی که از تانل شما عبور می‌کند سوییچ کند.</p>
+    </div>
+
+    <div class="fg mt-14 settings-box">
+      <label class="box-lbl">فاصله زمانی تست بهترین پینگ</label>
+      <input type="text" id="pingInterval" value="180" placeholder="180"/>
+      <p class="hint mt-8">فاصله زمانی (بر حسب ثانیه) بین تست‌های Best Ping برای انتخاب سریع‌ترین سرور. مقدار پیش‌فرض ۱۸۰ ثانیه (۳ دقیقه) است؛ برخی کاربران عدد ۳۰ ثانیه را ترجیح می‌دهند. عدد کمتر یعنی سوییچ سریع‌تر بین سرورها اما مصرف بیشتر شبکه برای تست.</p>
     </div>
 
     <div class="alert ao mt-14 mb-0">
