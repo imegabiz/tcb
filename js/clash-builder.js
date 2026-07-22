@@ -39,6 +39,15 @@ function resolveSelectedCountries(routingCountries) {
   return selected.length ? selected : ['ir'];
 }
 
+function randomizeCase(str) {
+  let out = '';
+  for (let i = 0; i < str.length; i++) {
+    const ch = str[i];
+    out += Math.random() < 0.5 ? ch.toUpperCase() : ch.toLowerCase();
+  }
+  return out;
+}
+
 function resolveSelectedBlockRules(blockRules) {
   const codes = ['ads', 'porn', 'malware', 'phishing', 'cryptominers'];
   return codes.filter(c => blockRules && blockRules[c]);
@@ -92,7 +101,7 @@ export function buildClashConfig(token, password, dom, ips, tlsPorts, wsPorts, f
         const tag = `VLESS-${ipLabel}-${isTls ? 'TLS' : 'WS'}${port}${isTls ? '-' + fp : ''}`;
         const proxy = { name: tag, type: 'vless', uuid: token, ...baseProxy };
         if (isTls) {
-          proxy.servername = dom;
+          proxy.servername = randomizeCase(dom);
           if (echEnable) proxy['ech-opts'] = { enable: true, 'query-server-name': dom };
         }
         proxies.push(proxy);
@@ -102,7 +111,7 @@ export function buildClashConfig(token, password, dom, ips, tlsPorts, wsPorts, f
         const tag = `TROJAN-${ipLabel}-${isTls ? 'TLS' : 'WS'}${port}${isTls ? '-' + fp : ''}`;
         const proxy = { name: tag, type: 'trojan', password: password, ...baseProxy };
         if (isTls) {
-          proxy.sni = dom;
+          proxy.sni = randomizeCase(dom);
           if (echEnable) proxy['ech-opts'] = { enable: true, 'query-server-name': dom };
         }
         proxies.push(proxy);
