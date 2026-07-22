@@ -47,7 +47,7 @@ function parseDnsUrl(value) {
 export function buildSingboxConfig(token, password, dom, ips, tlsPorts, wsPorts, fp, settings, protocols) {
   const {
     basePath, fragEnable, fakeDnsEnable, ipv6Enable, lanAccess,
-    remoteDnsVal, localDnsVal, tcpFastOpen, routingCountries, blockRules, pingInterval
+    remoteDnsVal, localDnsVal, tcpFastOpen, routingCountries, blockRules, pingInterval, echEnable
   } = settings;
 
   const selectedCountries = resolveSelectedCountries(routingCountries);
@@ -93,6 +93,9 @@ export function buildSingboxConfig(token, password, dom, ips, tlsPorts, wsPorts,
           alpn: ['http/1.1'],
           utls: { enabled: true, fingerprint: fp }
         };
+        if (echEnable) {
+          baseOutbound.tls.ech = { enabled: true, query_server_name: dom };
+        }
       }
       if (domainResolver) baseOutbound.domain_resolver = domainResolver;
 
