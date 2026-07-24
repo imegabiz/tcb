@@ -1,5 +1,40 @@
 import { parseChainConfig } from './chain-parser.js';
 
+const CLASH_COUNTRY_RULES = {
+  ir: {
+    geosite: { path: './ruleset/geosite-ir.txt', url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ir.txt', format: 'text', behavior: 'domain' },
+    geoip: { path: './ruleset/geoip-ir.txt', url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ircidr.txt', format: 'text', behavior: 'ipcidr' }
+  },
+  cn: {
+    geosite: { path: './ruleset/geosite-cn.yaml', url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.yaml', format: 'yaml', behavior: 'domain' },
+    geoip: { path: './ruleset/geoip-cn.yaml', url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.yaml', format: 'yaml', behavior: 'ipcidr' }
+  },
+  ru: {
+    geosite: { path: './ruleset/geosite-ru.yaml', url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/category-ru.yaml', format: 'yaml', behavior: 'domain' },
+    geoip: { path: './ruleset/geoip-ru.yaml', url: 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/ru.yaml', format: 'yaml', behavior: 'ipcidr' }
+  }
+};
+
+const CLASH_BLOCK_RULES = {
+  ads: [
+    { name: 'category-ads-all', behavior: 'domain', path: './ruleset/category-ads-all.txt', url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.txt' }
+  ],
+  porn: [
+    { name: 'nsfw', behavior: 'domain', path: './ruleset/nsfw.txt', url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/nsfw.txt' }
+  ],
+  malware: [
+    { name: 'malware', behavior: 'domain', path: './ruleset/malware.txt', url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.txt' },
+    { name: 'malware-cidr', behavior: 'ipcidr', path: './ruleset/malware-cidr.txt', url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware-ip.txt' }
+  ],
+  phishing: [
+    { name: 'phishing', behavior: 'domain', path: './ruleset/phishing.txt', url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.txt' },
+    { name: 'phishing-cidr', behavior: 'ipcidr', path: './ruleset/phishing-cidr.txt', url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing-ip.txt' }
+  ],
+  cryptominers: [
+    { name: 'cryptominers', behavior: 'domain', path: './ruleset/cryptominers.txt', url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.txt' }
+  ]
+};
+
 function resolveSelectedCountries(routingCountries) {
   const codes = ['ir', 'cn', 'ru'];
   const selected = codes.filter(c => routingCountries && routingCountries[c]);
