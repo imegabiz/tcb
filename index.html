@@ -277,7 +277,7 @@
         <div id="echFields" class="ech-field disabled">
           <label class="adv-lbl mt-8">DNS سرور برای دریافت کلید ECH</label>
           <input type="text" id="echDns" value="https://cloudflare-dns.com/dns-query" placeholder="https://cloudflare-dns.com/dns-query"/>
-          <p class="hint mt-6">فعال کردن چک‌باکس کافی است — کلید رمزنگاری دامنه Worker شما به صورت خودکار از این سرور DNS دریافت می‌شود. ECH روی هر چهار فرمت خروجی (لینک VLESS/Trojan، JSON برای Xray، JSON برای Sing-box و JSON برای Clash) اعمال می‌شود. آدرس پیش‌فرض (DoH Cloudflare) بهترین گزینه برای ایران است زیرا یک آدرس <code>https://</code> رمزگذاری‌شده است و برخلاف <code>udp://8.8.8.8</code> در برابر دستکاری DNS توسط ISPها مقاوم است. اگر DoH Proxy شخصی دارید، آدرس آن را اینجا وارد کنید.</p>
+          <p class="hint mt-6">فعال کردن چک‌باکس کافی است — کلید رمزنگاری دامنه Worker شما به صورت خودکار از این سرور DNS دریافت می‌شود. ECH روی لینک VLESS/Trojan، JSON برای Xray و JSON برای Clash اعمال می‌شود. به دلیل یک محدودیت شناخته‌شده در هسته‌ی Sing-box (کش‌شدن کانفیگ ECH و عدم بروزرسانی خودکار آن که می‌تواند باعث برقراری ظاهری اتصال بدون باز شدن واقعی سایت‌ها شود)، ECH روی خروجی JSON مخصوص Sing-box اعمال نمی‌شود. آدرس پیش‌فرض (DoH Cloudflare) بهترین گزینه برای ایران است زیرا یک آدرس <code>https://</code> رمزگذاری‌شده است و برخلاف <code>udp://8.8.8.8</code> در برابر دستکاری DNS توسط ISPها مقاوم است. اگر DoH Proxy شخصی دارید، آدرس آن را اینجا وارد کنید.</p>
         </div>
       </div>
       <div class="adv-dns-grid mt-12">
@@ -295,7 +295,7 @@
           <input type="text" id="remoteDns" value="https://cloudflare-dns.com/dns-query" placeholder="https://cloudflare-dns.com/dns-query"/>
         </div>
       </div>
-      <p class="hint mt-10">Local DNS برای resolve دامنه‌های داخلی کشورهای انتخاب‌شده استفاده می‌شود. Remote DNS به‌صورت پیشفرض روی Cloudflare DoH تنظیم است و می‌توانید آن را با هر آدرس DoH دلخواه جایگزین کنید. با ابزار DoH Proxy می‌توانید یک سرور DoH اختصاصی روی Cloudflare بسازید و آدرس آن را اینجا وارد کنید. Allow LAN اتصال سایر دستگاه‌های شبکه محلی را فعال می‌کند. ECH فقط در حالت Normal (بدون Fragment) روی هر چهار فرمت خروجی اعمال می‌شود؛ Fragment و ECH را نمی‌توان همزمان فعال کرد.</p>
+      <p class="hint mt-10">Local DNS برای resolve دامنه‌های داخلی کشورهای انتخاب‌شده استفاده می‌شود. Remote DNS به‌صورت پیشفرض روی Cloudflare DoH تنظیم است و می‌توانید آن را با هر آدرس DoH دلخواه جایگزین کنید. با ابزار DoH Proxy می‌توانید یک سرور DoH اختصاصی روی Cloudflare بسازید و آدرس آن را اینجا وارد کنید. Allow LAN اتصال سایر دستگاه‌های شبکه محلی را فعال می‌کند. ECH فقط در حالت Normal (بدون Fragment) روی لینک VLESS/Trojan، JSON برای Xray و JSON برای Clash اعمال می‌شود (نه Sing-box)؛ Fragment و ECH را نمی‌توان همزمان فعال کرد.</p>
     </div>
 
     <div class="fg mt-14 settings-box">
@@ -323,6 +323,12 @@
       <label class="box-lbl">فاصله زمانی تست بهترین پینگ</label>
       <input type="text" id="pingInterval" value="180" placeholder="180"/>
       <p class="hint mt-8">فاصله زمانی (بر حسب ثانیه) بین تست‌های Best Ping برای انتخاب سریع‌ترین سرور. مقدار پیش‌فرض ۱۸۰ ثانیه (۳ دقیقه) است؛ برخی کاربران عدد ۳۰ ثانیه را ترجیح می‌دهند. عدد کمتر یعنی سوییچ سریع‌تر بین سرورها اما مصرف بیشتر شبکه برای تست.</p>
+    </div>
+
+    <div class="fg mt-14 settings-box">
+      <label class="box-lbl">Chain Proxy — ثابت کردن IP خروجی (اختیاری)</label>
+      <textarea id="chainConfig" placeholder="vless://... یا trojan://... یا ss://... یا socks://... یا http://..."></textarea>
+      <p class="hint mt-8">یک کانفیگ با فرمت URL از یک سرور دیگر (مثلاً یک VPS با IP ثابت) اینجا وارد کنید تا کانفیگ‌های TCB به آن Chain شوند: ابتدا از طریق Worker شما (برای عبور از فیلترینگ) و سپس از طریق این سرور به اینترنت متصل می‌شوید — یعنی IP خروجی شما همیشه ثابت و برابر با IP همان سرور خواهد بود. فرمت‌های پشتیبانی‌شده: VLESS (tcp/ws/grpc با none/tls/reality)، Trojan (tcp/ws/grpc با tls)، Shadowsocks، SOCKS5 و HTTP. این قابلیت فقط روی کانفیگ‌های JSON برای Xray، Sing-box و Clash اعمال می‌شود (نه روی کانفیگ‌های تکی فرمت لینک)، چون Chain به دو گره هماهنگ نیاز دارد که فقط در یک فایل کانفیگ کامل قابل تعریف است. وقتی این قابلیت فعال باشد، ایموجی ⛓️ کنار نام کانفیگ‌های JSON اضافه می‌شود. برای غیرفعال کردن، این کادر را خالی بگذارید. نکته مهم: کد Worker شما نیازی به هیچ تغییری ندارد.</p>
     </div>
 
     <div class="alert ao mt-14 mb-0">
@@ -387,7 +393,7 @@
           <div class="code-box" id="singboxDisplay"></div>
         </div>
       </div>
-      <p class="hint mt-10">این کانفیگ مستقیماً برای Sing-box و کلاینت‌های مبتنی بر هسته‌ی Sing-box ساخته شده و در صورت فعال بودن ECH، این قابلیت روی آن نیز اعمال می‌شود (Fragment و سایر تنظیمات شما نیز اعمال شده‌اند).</p>
+      <p class="hint mt-10">این کانفیگ مستقیماً برای Sing-box و کلاینت‌های مبتنی بر هسته‌ی Sing-box ساخته شده (Fragment و سایر تنظیمات شما اعمال شده‌اند). به دلیل یک محدودیت شناخته‌شده در خود هسته‌ی Sing-box (کش‌شدن کانفیگ ECH و عدم بروزرسانی خودکار آن که می‌تواند باعث برقراری ظاهری اتصال بدون باز شدن واقعی سایت‌ها شود)، ECH عمداً روی این کانفیگ اعمال نمی‌شود.</p>
     </div>
   </div>
   <div class="sec">
