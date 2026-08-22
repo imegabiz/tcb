@@ -423,6 +423,10 @@
       </div>
       <p class="hint mt-8" data-i18n="hint.sanctionInfo">سرویس‌هایی که تیک می‌زنید همیشه مستقیم (با DNS بالا) مسیریابی می‌شوند، حتی اگر IP خروجی شما ایرانی تشخیص داده شود.</p>
 
+      <label class="adv-lbl mb-8 mt-12" data-i18n="lbl.customSanctionRules">دامنه‌های سفارشی ضدتحریم — هر خط یک دامنه/IP/CIDR</label>
+      <textarea id="customSanctionRules" placeholder="example.com&#10;192.168.1.1&#10;192.168.1.0/24" autocomplete="off"></textarea>
+      <p class="hint mt-8" data-i18n="hint.customSanctionRulesInfo">این آدرس‌ها هم مستقیم مسیریابی می‌شوند و هم از DNS ضدتحریم بالا استفاده می‌کنند.</p>
+
       <label class="adv-lbl mb-8 mt-12" data-i18n="lbl.customBypassRules">Custom Bypass Rules — هر خط یک دامنه/IP/CIDR</label>
       <textarea id="customBypassRules" placeholder="example.com&#10;192.168.1.1&#10;192.168.1.0/24" autocomplete="off"></textarea>
       <p class="hint mt-8" data-i18n="hint.customRulesInfo">دامنه‌ی وارد شده و همه زیردامنه‌هایش هم شامل می‌شود.</p>
