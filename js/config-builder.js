@@ -192,7 +192,7 @@ export function buildJsonConfig(token, password, dom, ips, tlsPorts, wsPorts, fp
     fakeDnsEnable, ipv6Enable, lanAccess, remoteDnsVal, localDnsVal,
     tcpFastOpen, echEnable, echDns, jsonName, customDomainUsed, customDomain, routingCountries, blockRules,
     leastPingInterval, leastLoadInterval, leastLoadMode, leastLoadSampling, leastLoadTimeout, parsedChain,
-    sanctionDnsVal, sanctionBypass, customBypassRules, customBlockRules
+    sanctionDnsVal, sanctionBypass, customBypassRules, customBlockRules, customSanctionRules
   } = settings;
 
   const advTls = { frag2Enable, frag2Packets, frag2Length, frag2Interval, frag2MaxSplit, fpUnsafeXray, cipherSuitesXray };
@@ -218,9 +218,13 @@ export function buildJsonConfig(token, password, dom, ips, tlsPorts, wsPorts, fp
   const customBypassIps = (customBypassRules && customBypassRules.ips) || [];
   const customBlockDomains = (customBlockRules && customBlockRules.domains) || [];
   const customBlockIps = (customBlockRules && customBlockRules.ips) || [];
+  const customSanctionDomains = (customSanctionRules && customSanctionRules.domains) || [];
+  const customSanctionIps = (customSanctionRules && customSanctionRules.ips) || [];
 
-  const allDirectDomains = [...new Set([...directDomains, ...sanctionDomains, ...customBypassDomains.map(d => `domain:${d}`)])];
-  const allDirectIps = [...new Set([...directIps, ...customBypassIps])];
+  const sanctionDnsDomains = [...new Set([...sanctionDomains, ...customSanctionDomains.map(d => `domain:${d}`)])];
+
+  const allDirectDomains = [...new Set([...directDomains, ...sanctionDomains, ...customBypassDomains.map(d => `domain:${d}`), ...customSanctionDomains.map(d => `domain:${d}`)])];
+  const allDirectIps = [...new Set([...directIps, ...customBypassIps, ...customSanctionIps])];
   const allBlockDomains = [...new Set([...blockDomains, ...customBlockDomains.map(d => `domain:${d}`)])];
   const allBlockIps = [...new Set([...blockIps, ...customBlockIps])];
 
@@ -347,10 +351,10 @@ export function buildJsonConfig(token, password, dom, ips, tlsPorts, wsPorts, fp
     domesticTags.push(tag);
   });
 
-  if (sanctionDomains.length) {
+  if (sanctionDnsDomains.length) {
     dnsServers.push({
       address: sanctionDnsAddr,
-      domains: sanctionDomains,
+      domains: sanctionDnsDomains,
       skipFallback: true,
       tag: 'sanction-dns'
     });
