@@ -30,7 +30,7 @@ Tunnel Config Builder is a web-based tool that lets you build VLESS and Trojan c
 - Advanced JSON settings: Fake DNS, IPv6, Allow LAN, TCP Fast Open, Local DNS, Remote DNS / DoH
 - ECH support to encrypt the Client Hello and hide the SNI from DPI systems
 - Configurable routing rules: select Iran, China, and Russia for direct routing (Bypass), and select the Ads, Porn, QUIC, Malware, Phishing, and Cryptominers categories for blocking; both groups apply simultaneously across all three output formats (Xray, Sing-box, Clash)
-- **Bypass Sanctions**: direct routing for sanctioned services (ChatGPT, Google AIs, Microsoft, Oracle, Docker, Adobe, Epic Games, Intel, AMD, Nvidia, Asus, HP, Lenovo, Claude, Grok) using a configurable anti-sanction DNS (default: 178.22.122.100), even if your outbound IP is detected as Iranian
+- **Bypass Sanctions**: direct routing for sanctioned services (OpenAI, Google AIs, Anthropic, xAI, Microsoft, Oracle, Docker, Adobe, Epic Games, Intel, AMD, Nvidia, Asus, HP, Lenovo) using a configurable anti-sanction DNS (default: 178.22.122.100), even if your outbound IP is detected as Iranian
 - **Custom Routing Rules**: two text boxes for entering your own domains/IPs/CIDRs to directly Bypass or Block, independent of the built-in categories above
 - User-editable Observatory Settings (leastPing/leastLoad interval, mode, sampling, timeout) for the Xray core
 - Chain Proxy — the ability to chain TCB configs to an external server (VLESS, Trojan, Shadowsocks, SOCKS5, or HTTP) to keep the outbound IP fixed, across all three JSON output formats (Xray, Sing-box, Clash)
@@ -213,11 +213,13 @@ For each country and each category, the GeoIP/GeoSite databases specific to that
 
 ### Bypass Sanctions
 
-Independent of the Bypass rules above, this section lets you route services that block Iranian IPs because of sanctions (not local filtering) directly, using a dedicated DNS: ChatGPT (OpenAI), Google AIs, Microsoft, Oracle, Docker, Adobe, Epic Games, Intel, AMD, Nvidia, Asus, HP, Lenovo, Claude (Anthropic), and Grok (xAI). The anti-sanction DNS box above these checkboxes defaults to 178.22.122.100 (Shecan) and can be changed to any DNS you prefer. This feature is entirely client-side and has no effect on the Worker/Pages code.
+Independent of the Bypass rules above, this section lets you route services that block Iranian IPs because of sanctions (not local filtering) directly, using a dedicated DNS: OpenAI, Google AIs, Anthropic, xAI, Microsoft, Oracle, Docker, Adobe, Epic Games, Intel, AMD, Nvidia, Asus, HP, and Lenovo. The anti-sanction DNS box above these checkboxes defaults to 178.22.122.100 (Shecan) and can be changed to any DNS you prefer. This feature is entirely client-side and has no effect on the Worker/Pages code.
+
+Right below these checkboxes, a separate text box called "Custom Anti-Sanction Domains" is also available — for specific sanctioned domains or services not covered by the 15 categories above. Unlike the "Custom Bypass Rules" box further down, addresses entered here are both routed directly and resolved using the same anti-sanction DNS above.
 
 ### Custom Routing Rules
 
-Two independent text boxes ("Custom Bypass Rules" and "Custom Block Rules") let you enter your own domain, IP, or CIDR — one per line — that aren't covered by the built-in checkboxes above. An entered domain also covers all of its subdomains. Both boxes are independent of Bypass Sanctions and are entirely client-side, with no effect on the Worker/Pages code.
+Two independent text boxes ("Custom Bypass Rules" and "Custom Block Rules") let you enter your own domain, IP, or CIDR — one per line — that aren't covered by the built-in checkboxes above. An entered domain also covers all of its subdomains. Note: these two boxes only decide the connection path (direct vs. tunneled) and do not apply the anti-sanction DNS to them — for that, use the "Custom Anti-Sanction Domains" box in the Bypass Sanctions section above. These boxes are entirely client-side, with no effect on the Worker/Pages code.
 
 ### Observatory Settings
 
