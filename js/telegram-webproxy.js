@@ -27,6 +27,7 @@ function __telegramCandidate(request) {
   const url = new URL(request.url);
   if (request.method === 'GET' && url.searchParams.has('bridge')) return true;
   if (url.pathname === '/api/v1/session') return request.method === 'POST' || request.method === 'DELETE';
+  if (url.pathname === '/api/v1/diag') return request.method === 'POST';
   if (url.pathname === '/api/v1/ws') return (request.headers.get('upgrade') || '').toLowerCase() === 'websocket';
   return false;
 }
