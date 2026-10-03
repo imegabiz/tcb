@@ -9,7 +9,7 @@ const { deriveCapability } = await core('capability.js');
 const { mintTokenWithNonce, TOKEN_KIND } = await core('token.js');
 const { FrameDecoder, FRAME, encodeHello, encodeOpen, encodeData, encodeClose } = await core('protocol-v3.js');
 const { buildClientHeader, aesCtrCrypt, FRAME_TAG } = await core('obfuscated2.js');
-const { PAGE_SCRIPT } = await core('bridge-page.js');
+const { buildPageScript } = await core('bridge-page.js');
 
 const SECRET = process.env.TG_SECRET || '0102030405060708090a0b0c0d0e0f10';
 const HOST = process.env.TG_HOST || 'tcb-test.example.workers.dev';
@@ -187,7 +187,7 @@ async function testReattachAndDelete() {
 
 async function testBridgePageAgainstRelay() {
   const { token, html } = await fetchBridge();
-  const script = PAGE_SCRIPT.replace('__BOOTSTRAP__', JSON.stringify(token));
+  const script = buildPageScript({ bootstrap: token, relayBase: 'https://' + HOST + '/', diag: false });
   const androidNonce = 'N'.repeat(43);
   const toLocal = (u) => String(u).replace(/^https:\/\/[^/]+/, BASE).replace(/^wss:\/\/[^/]+/, WS_BASE);
   const sent = []; const recvQueue = [];
@@ -197,6 +197,7 @@ async function testBridgePageAgainstRelay() {
   const fakeWindow = {
     location: { origin: 'https://' + HOST, pathname: '/', hash: '#android=' + androidNonce },
     history: { replaceState() {} },
+    document: { readyState: 'complete' },
     addEventListener() {},
     parent: {},
     TelegramWebProxy: bridge,
@@ -272,7 +273,26 @@ async function testTcbWebsocketStillWorks() {
   try { wrongProto.close(); } catch {}
 }
 
-const suites = process.env.TG_NO_SECRET === '1' ? [testNoSecret] : [testRouting, testTcbWebsocketStillWorks, async () => { const s = await testBootstrapAndSession(); await testWsFlow(s); }, testReattachAndDelete, testBridgePageAgainstRelay];
+async function testDiagEndpoint() {
+  const on = process.env.TG_DIAG === '1';
+  const good = await fetch(`${BASE}/api/v1/diag`, { method: 'POST', body: JSON.stringify({ s: 'page-start', hash: 'android-ok', bridgeObj: 'object', postFn: true, ready: 'loading' }) });
+  const junk = await fetch(`${BASE}/api/v1/diag`, { method: 'POST', body: JSON.stringify({ s: 'page-start', hash: 'SECRETVALUE', extra: 'LEAKME', n: 'bad value!' }) });
+  const huge = await fetch(`${BASE}/api/v1/diag`, { method: 'POST', body: 'x'.repeat(5000) });
+  const notJson = await fetch(`${BASE}/api/v1/diag`, { method: 'POST', body: 'not json' });
+  const get = await fetch(`${BASE}/api/v1/diag`);
+  if (on) {
+    check('diag on: accepted payloads, junk and oversized bodies all answer 204', [good, junk, huge, notJson].every((r) => r.status === 204), [good, junk, huge, notJson].map((r) => r.status).join(','));
+    check('diag on: GET is not served by the diag handler', get.status === 200);
+    const { bridge } = await (async () => { const b = await fetchBridge(); return { bridge: b }; })();
+    check('diag on: bridge page embeds diagnostics flag true', /const diagOn=true;/.test(bridge.html));
+  } else {
+    check('diag off: the diag endpoint is not handled (falls through to the TCB worker)', [good, junk, huge, notJson].every((r) => r.status === 200 && true));
+    const bridge = await fetchBridge();
+    check('diag off: bridge page embeds diagnostics flag false', /const diagOn=false;/.test(bridge.html));
+  }
+}
+
+const suites = process.env.TG_NO_SECRET === '1' ? [testNoSecret] : [testRouting, testDiagEndpoint, testTcbWebsocketStillWorks, async () => { const s = await testBootstrapAndSession(); await testWsFlow(s); }, testReattachAndDelete, testBridgePageAgainstRelay];
 for (const suite of suites) {
   try { await suite(); } catch (err) { fail++; console.log('[FAIL] suite crashed: ' + err.stack); }
 }
