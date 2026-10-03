@@ -8,6 +8,7 @@ OUT="$(mktemp -d)"
 node "$HERE/build-package.mjs" "$MODE" "$OUT" tcb-test.example.workers.dev tcb-test >/dev/null 2>&1
 if [ -n "$SECRET" ]; then
   printf 'TELEGRAM_SECRET=%s\nTELEGRAM_TEST_FIXED_DC_ADDR=127.0.0.1:21301\nTELEGRAM_DEBUG=1\n' "$SECRET" > "$OUT/telegram-worker/.dev.vars"
+  if [ "${TG_DIAG:-0}" = "1" ]; then printf 'TELEGRAM_DIAG=1\n' >> "$OUT/telegram-worker/.dev.vars"; fi
 else
   printf 'TELEGRAM_DEBUG=1\n' > "$OUT/telegram-worker/.dev.vars"
 fi
@@ -32,6 +33,11 @@ else
   TG_NO_SECRET=1 TG_SECRET="0102030405060708090a0b0c0d0e0f10" TG_HOST="tcb-test.example.workers.dev" node "$HERE/e2e.mjs"
 fi
 STATUS=$?
+if [ "${TG_DIAG:-0}" = "1" ]; then
+  echo "diag lines in worker log: $(grep -c tg-diag "$OUT/wrangler.log")"
+  if grep -q "SECRETVALUE\|LEAKME\|bad value" "$OUT/wrangler.log"; then echo "[FAIL] unsanitized diagnostic content reached the log"; STATUS=1; else echo "[PASS] junk diagnostic fields never reached the log"; fi
+  if grep "tg-diag" "$OUT/wrangler.log" | grep -q "page-start"; then echo "[PASS] sanitized page-start diagnostic was logged"; else echo "[FAIL] no page-start diagnostic in log"; STATUS=1; fi
+fi
 kill $DC 2>/dev/null
 pkill -9 -f "[w]rangler"
 sleep 1
